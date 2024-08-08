@@ -4,7 +4,7 @@ resource "aws_instance" "jenkins_ec2" {
   instance_type               = var.instance_type
   key_name                    = var.key_name
   associate_public_ip_address = true
-  vpc_security_group_ids      = [aws_security_group.jenkins_sg.id]
+  vpc_security_group_ids      = [aws_security_group.jenkins_ikos.id]
   user_data                   = "${file("install_jenkins.sh")}"
 
   tags = {
@@ -13,8 +13,8 @@ resource "aws_instance" "jenkins_ec2" {
 }
 
 # Jenkins Security Group
-resource "aws_security_group" "jenkins_sg" {
-  name        = "jenkins-sg"
+resource "aws_security_group" "jenkins_ikos" {
+  name        = "jenkins-ikos"
   description = "Allow Port 22, 443, and 8080"
 
   ingress {
@@ -63,7 +63,7 @@ resource "aws_instance" "tomcat" {
   instance_type                = var.tomcat_instance_type
   key_name                     = var.tomcat_key
   associate_public_ip_address  = true
-  vpc_security_group_ids       = [aws_security_group.jenkins_sg.id]
+  vpc_security_group_ids       = [aws_security_group.jenkins_ikos.id]
 
   tags = {
     Name = "tomcat"
